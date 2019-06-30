@@ -1,0 +1,125 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="PraxiLabs.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - My ASP.NET Application</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        .level2 
+        {
+            background-color: #7386D5 !important;
+    position: relative !important;
+    top: 0px;
+    left: 10px !important;
+    margin-top: -1px !important;
+    color: white !important;
+    width: 170px !important;
+        }
+        .level3
+        {
+            background-color: #7386D5 !important;
+    position: relative !important;
+    top: 0px;
+    left: 15px !important;
+    margin-top: -1px !important;
+    color: white !important;
+    width: 170px !important;
+        }
+    </style>
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <div id="Category" class="navbar navbar-expand-lg navbar-light bg-light" style="text-align: center; width:100%">       
+           
+            <div class="container-fluid" style="    padding-top: 5px;">
+                <asp:ListView ID="categoryList"  
+                ItemType="PraxiLabs.Category" 
+                runat="server"
+                SelectMethod="GetParentCategory" >
+                <ItemTemplate>
+                    <b style="font-size: large; font-style: normal">
+                        
+                            <a href="DisplaySubCategory.aspx?id=<%#: Item.Id %>">
+                            
+                        <%#: Item.Title %>
+                        </a>
+                    </b>
+                </ItemTemplate>
+                <ItemSeparatorTemplate>  |  </ItemSeparatorTemplate>
+            </asp:ListView>
+        </div> 
+
+        </div>
+   <div class="sidenav">  
+    <asp:Menu ID="Menu1" runat="server" Orientation="Vertical">  
+        <LevelMenuItemStyles>  
+            <asp:MenuItemStyle CssClass="ParentMenu" />  
+            
+            <asp:MenuItemStyle CssClass="ChildMenu" />  
+            <asp:MenuItemStyle CssClass="ChildMenu" />  
+        </LevelMenuItemStyles>  
+        <StaticSelectedStyle CssClass="selected" />  
+    </asp:Menu>  
+</div>  
+   <div class="container body-content" style=" margin: -30px 300px !important; min-height:500px">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr /> 
+
+    <asp:DropDownList ID="DropDownList1" runat="server" >
+    </asp:DropDownList> 
+
+    <asp:Button ID="Button1" runat="server" Text="SubCategory" OnClick="Button1_Click"  /> 
+
+    <asp:Button ID="Button2" runat="server" Text="Experiments"  OnClick="Button2_Click"/>
+    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+    <br />
+    <asp:GridView CssClass="table table-bordered" HeaderStyle-CssClass="bg-primary text-white" AutoGenerateColumns="false" ID="GridView1" runat="server">  
+                <Columns>  
+                    <asp:BoundField HeaderText="ID" DataField="Id" />  
+                    <asp:ImageField HeaderText="Image" ControlStyle-Height="50" ControlStyle-Width="80" DataImageUrlField="Image"></asp:ImageField>  
+                    <asp:BoundField HeaderText="Name" DataField="Title" />  
+                     
+                    <asp:BoundField HeaderText="Description" DataField="Description" />  
+                </Columns>  
+            </asp:GridView>
+        </div> 
+
+
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> </p>
+            </footer>
+
+    </form>
+</body>
+</html>
